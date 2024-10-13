@@ -41,7 +41,6 @@ namespace AzurePullRequests.Restore.Services
                 throw new FileNotFoundException("File not found in backup folder", filePath);
             }
 
-            // read state file
             var jsonState = File.ReadAllText(filePath);
             var state = JsonConvert.DeserializeObject<RepositoryState>(jsonState);
 
@@ -52,15 +51,12 @@ namespace AzurePullRequests.Restore.Services
                 var jsonPR = File.ReadAllText(pullRequestFileLocation);
                 var pullRequest = JsonConvert.DeserializeObject<GitPullRequest>(jsonPR);
 
-                // check if PR is in DevOps. If there update PR else create new
                 if (await IsPullRequestInDevOps(pullRequestState.Id))
                 {
-                    // update existing
                     await RestoreDevOpsEntityAsync(RestoreType.Update, apiUrl, pullRequest);
                 }
                 else
                 {
-                    // create new
                     await RestoreDevOpsEntityAsync(RestoreType.Create, apiUrl, pullRequest);
                 }
             }
@@ -151,8 +147,6 @@ namespace AzurePullRequests.Restore.Services
                             response = await client.PostAsync(apiUrl, content);
                             break;
                         case RestoreType.Update:
-                            // update will not take certain fields o just leaving Title and Description for now.
-                            // Comments updated in own endpoint
                             var updateObject = new
                             {
                                 pullRequest.Title,
