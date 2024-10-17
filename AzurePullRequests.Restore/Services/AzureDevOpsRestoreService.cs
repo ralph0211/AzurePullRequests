@@ -151,8 +151,6 @@ namespace AzurePullRequests.Restore.Services
                             response = await client.PostAsync(apiUrl, content);
                             break;
                         case RestoreType.Update:
-                            // update will not take certain fields o just leaving Title and Description for now.
-                            // Comments updated in own endpoint
                             var updateObject = new
                             {
                                 pullRequest.Title,
