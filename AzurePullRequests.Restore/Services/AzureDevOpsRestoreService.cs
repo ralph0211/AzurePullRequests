@@ -30,7 +30,7 @@ namespace AzurePullRequests.Restore.Services
             if (string.IsNullOrEmpty(restoreStateFile))
             {
                 Console.WriteLine("RestoreStateFile parameter not set in appsettings!");
-                throw new ArgumentNullException(nameof(restoreStateFile), "RestoreStateFile parameter not set in appsettings!");
+                throw new ArgumentNullException(paramName: nameof(restoreStateFile), "RestoreStateFile parameter not set in appsettings!");
             }
 
             var filePath = Path.Combine(_backupFolder, restoreStateFile);
