@@ -30,7 +30,7 @@ namespace AzurePullRequests.Restore.Services
             if (string.IsNullOrEmpty(restoreStateFile))
             {
                 Console.WriteLine("RestoreStateFile parameter not set in appsettings!");
-                throw new ArgumentNullException(nameof(restoreStateFile), "RestoreStateFile parameter not set in appsettings!");
+                throw new ArgumentNullException(paramName: nameof(restoreStateFile), "RestoreStateFile parameter not set in appsettings!");
             }
 
             var filePath = Path.Combine(_backupFolder, restoreStateFile);
@@ -151,8 +151,6 @@ namespace AzurePullRequests.Restore.Services
                             response = await client.PostAsync(apiUrl, content);
                             break;
                         case RestoreType.Update:
-                            // update will not take certain fields o just leaving Title and Description for now.
-                            // Comments updated in own endpoint
                             var updateObject = new
                             {
                                 pullRequest.Title,
